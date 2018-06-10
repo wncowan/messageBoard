@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Message Board</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <% if (messages) {%>
+        <ul>
+        <% for (message of messages) { %>
+            <li><%=message%></li>
+        <%}%>
+        </ul>
+        <%}%>
+        <h1>Message Board</h1>
+        <hr>
+        <form method="POST" action="/">
+            <label>
+                <p>Name:</p>
+                <p><input type=text name="body[name]"></p>
+                <p>Message:</p>
+                <p><textarea name="body[message]" rows=5 cols=40></textarea></p>
+                <p><button>Submit</button></p>
+            </label>
+        </form>
+        <% if (posts) { %>
+            <ul>
+            <% for (post of posts) { %>
+                <li>
+                    <p>Name: <%=post.name%></p>
+                    <p>Message: <%=post.message%></p>
+                </li>
+                <ul>
+                    <form method="POST" action="/comment/<%=post._id%>">
+                        <label>
+                            <p>Name:</p>
+                            <p><input type=text name="body[name]"></p>
+                            <p>Comment:</p>
+                            <p><textarea name="body[text]" rows=5 cols=40></textarea></p>
+                            <p><button>Submit</button></p>
+                        </label>
+                    </form>
+                    <% for (comment of post.comments) {%>
+                        <li>
+                            <p>Name: <%=comment.name%></p>
+                            <p>Comment: <%=comment.text%></p>  
+                        </li>
+                    <%}%>
+                </ul>
+            <% } %>
+            <ul>
+        <% } %>
+    </body>
+</html>
